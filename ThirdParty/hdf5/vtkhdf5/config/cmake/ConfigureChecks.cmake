@@ -352,8 +352,17 @@ C_RUN ("maximum decimal precision for C" ${PROG_SRC} PROG_RES PROG_OUTPUT4)
 # dnl The output from the above program will be:
 # dnl  -- long double decimal precision  --  __float128 decimal precision
 
-list (GET PROG_OUTPUT4 0 H5_LDBL_DIG)
-list (GET PROG_OUTPUT4 1 H5_FLT128_DIG)
+list (LENGTH PROG_OUTPUT4 PROG_OUTPUT4_LEN)
+if (PROG_OUTPUT4_LEN GREATER 0)
+  list (GET PROG_OUTPUT4 0 H5_LDBL_DIG)
+else ()
+  set (H5_LDBL_DIG 0)
+endif ()
+if (PROG_OUTPUT4_LEN GREATER 1)
+  list (GET PROG_OUTPUT4 1 H5_FLT128_DIG)
+else ()
+  set (H5_FLT128_DIG 0)
+endif ()
 endif ()
 
 if (${HDF_PREFIX}_SIZEOF___FLOAT128 EQUAL "0" OR FLT128_DIG EQUAL "0")
